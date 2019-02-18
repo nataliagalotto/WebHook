@@ -3,13 +3,14 @@ package com.example.webhook.resources;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class WebhookResource {
@@ -20,12 +21,16 @@ public class WebhookResource {
 			
 	 		System.out.println(request.toString());
 	 		
-	 		final Map<String,String> header = new HashMap<>();
-	 	
-	 		header.put("Access-Control-Allow-Origin", "https://sandbox.pagseguro.uol.com.br");
+	 		final MultiValueMap<String,String> header = new LinkedMultiValueMap<>();
+	 	 	
+	 		header.add("Access-Control-Allow-Origin", "https://sandbox.pagseguro.uol.com.br");
 	 		//header.put("Accept","application/x-www-form-urlencoded");
+
+	 		ResponseEntity<?> response = new ResponseEntity(header, HttpStatus.OK);
+	 		
+	 		
 			
-			return new ResponseEntity(header, HttpStatus.OK);
+			return response ;
 	 		
 	 	}
 }
